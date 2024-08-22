@@ -1,0 +1,12 @@
+# Backend build artifacts
+dist/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# node_modules
+node_modules/
