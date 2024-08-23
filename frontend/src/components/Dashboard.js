@@ -63,7 +63,7 @@ const Dashboard = () => {
       tooltip: {
         callbacks: {
           label: function(tooltipItem) {
-            return `Value: ${tooltipItem.raw}`;
+            return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
           }
         }
       }
@@ -72,7 +72,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h2>Battery Dashboard</h2>
+      <h2>Battery Data Dashboard</h2>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

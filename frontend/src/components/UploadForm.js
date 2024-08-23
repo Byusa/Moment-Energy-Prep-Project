@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+// frontend/src/components/UploadForm.js
+import React, { useState } from "react";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -12,26 +12,31 @@ const UploadForm = () => {
 
   const handleUpload = async () => {
     if (!file) {
-      setMessage('No file selected.');
+      setMessage("No file selected.");
       return;
     }
+    console.log("Uploading file:", file);
 
     setLoading(true);
-    setMessage('');
+    setMessage("");
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file); // Ensure the field name matches what the server expects
 
     try {
-      await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      const response = await fetch("http://localhost:5002/api/upload", {
+        method: "POST",
+        body: formData,
       });
-      setMessage('File uploaded successfully!');
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const result = await response.text();
+      setMessage(result); // Display server response
     } catch (error) {
-      console.error('Error uploading file', error);
-      setMessage('Error uploading file.');
+      setMessage(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -39,10 +44,9 @@ const UploadForm = () => {
 
   return (
     <div>
-      <h2>Upload Battery Data</h2>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload} disabled={loading}>
-        {loading ? 'Uploading...' : 'Upload'}
+        {loading ? "Uploading..." : "Upload"}
       </button>
       {message && <p>{message}</p>}
     </div>
@@ -50,3 +54,11 @@ const UploadForm = () => {
 };
 
 export default UploadForm;
+
+
+
+  // await axios.post('/api/upload', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // });

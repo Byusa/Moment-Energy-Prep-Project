@@ -86,6 +86,3 @@ This project is designed to simulate a full-stack application for Moment Energy,
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-# Moment-Energy-Prep-Project
